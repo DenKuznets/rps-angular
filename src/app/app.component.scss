@@ -1,5 +1,61 @@
-// background: gradients.backgroundGradient,
-//     height: "100vh",
-//     minHeight: { xs: "740px", md: "790px" },
-//     padding: { xs320: "1rem", xs375: "2rem", md: "3rem" },
-//     position: "relative",
+main {
+    padding: 3rem;
+
+    @media only screen and (max-width: 768px) {
+        padding: 1rem;
+    }
+
+    text-transform: uppercase;
+
+    button {
+        text-transform: uppercase;
+
+    }
+
+    .buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-bottom: 100px;
+
+    }
+
+    .field {
+        display: grid;
+        width: 100%;
+        grid-template-columns: repeat(3, 1fr);
+        justify-items: center;
+        align-items: center;
+        text-align: center;
+
+        .user,
+        .ai {
+            >div {
+                margin-bottom: 100px;
+            }
+        }
+
+        .user {
+            grid-column: 1 /1;
+        }
+
+        .winner {
+            grid-column: 2 /2;
+
+            @media only screen and (max-width: 768px) {
+                grid-row: 3;
+                grid-column: 1 / 4;
+                margin-top: 40px;
+            }
+
+            >div {
+                margin-bottom: 20px;
+            }
+        }
+
+        .ai {
+            grid-column: 3 / 3;
+        }
+
+    }
+}

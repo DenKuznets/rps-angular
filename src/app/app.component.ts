@@ -5,36 +5,52 @@ import { ChoiceComponent } from './choice/choice.component';
 import { ChoicesService } from './choices.service';
 import { aiChoiceService } from './set-ai-choice.service';
 import { DetermineWinnerService } from './determine-winner.service';
+import { StubComponent } from './stub/stub.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, ChoiceComponent],
+  imports: [CommonModule, RouterOutlet, ChoiceComponent, StubComponent],
   template: `
     <main>
-      <app-choice type="paper"></app-choice>
-      <button
-        *ngFor="let choice of choicesService.getChoices() | keyvalue"
-        (click)="setUserChoice(choice.value)"
-      >
-        {{ choice.value }}
-      </button>
-      <div>User choice</div>
-      <div>{{ userChoice }}</div>
-      <div>AI choice</div>
-      <div>{{ aiChoice }}</div>
-      <div>winner</div>
-      <div>{{ winner }}</div>
-      <button (click)="resetGame()">play again</button>
+      <div class="buttons">
+        <button
+          [disabled]="winner"
+          *ngFor="let choice of choicesService.getChoices() | keyvalue"
+          (click)="setUserChoice(choice.value)"
+        >
+          {{ choice.value }}
+        </button>
+      </div>
+      <div class="field">
+        <div class="user">
+          <div>User choice</div>
+          <app-choice *ngIf="userChoice" [type]="userChoice"></app-choice>
+          <app-stub *ngIf="!userChoice"></app-stub>
+        </div>
+        <div *ngIf="winner" class="winner">
+          <div>
+            {{ winner === 'draw' ? winner : 'The winner is ' + winner }}
+          </div>
+          <button style="margin: 0 auto;display: block;" (click)="resetGame()">
+            play again
+          </button>
+        </div>
+        <div class="ai">
+          <div>AI choice</div>
+          <app-stub *ngIf="!aiChoice"></app-stub>
+          <app-choice *ngIf="aiChoice" [type]="aiChoice"></app-choice>
+        </div>
+      </div>
     </main>
   `,
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'rps-angular';
-  userChoice = 'no choice';
-  aiChoice = 'no choice';
-  winner = 'no winner';
+  userChoice = '';
+  aiChoice = '';
+  winner = '';
   choicesService: ChoicesService = inject(ChoicesService);
   aiChoiceService: aiChoiceService = inject(aiChoiceService);
   determineWinnerService: DetermineWinnerService = inject(
@@ -66,8 +82,8 @@ export class AppComponent {
   }
 
   resetGame() {
-    this.userChoice = 'no choice';
-    this.aiChoice = 'no choice';
-    this.winner = 'no winner';
+    this.userChoice = '';
+    this.aiChoice = '';
+    this.winner = '';
   }
 }

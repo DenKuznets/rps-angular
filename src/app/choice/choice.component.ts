@@ -9,7 +9,7 @@ import { Component, Input } from '@angular/core';
       <div>
         <div>
           <img
-            src="assets/icon-paper.svg"
+            src="assets/icon-{{ type }}.svg"
             alt="paper"
             height="auto"
             width="45%"
