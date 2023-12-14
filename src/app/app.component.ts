@@ -60,10 +60,10 @@ export class AppComponent {
 
   setUserChoice(choice: string) {
     this.userChoice = choice;
-    this.choiceAnimation();
+    this.aiChoiceAnimation();
   }
 
-  choiceAnimation() {
+  aiChoiceAnimation() {
     let index = 0;
     const interval = setInterval(() => {
       let choices = Object.values(this.choices);
